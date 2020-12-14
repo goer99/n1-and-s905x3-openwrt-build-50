@@ -1,3 +1,5 @@
+*.yml
+.github/
 openwrt/
 out/
 tmp/
