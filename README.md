@@ -1,3 +1,5 @@
+imported from: https://github.com/tuanqing/mknop
+
 # 自动构建斐讯 N1、微加云、贝壳云、我家云、S905x3( X96 Max Plus, HK1 Box ) OpenWrt 固件脚本
 # Automatically Build OpenWrt Firmware for Phicomm n1, Vplus, Beikeyun, L1-pro, S905x3( X96 Max Plus, HK1 Box ) etc
 
