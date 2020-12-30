@@ -5,12 +5,18 @@ cd lede
 (
     cd package
     git clone https://github.com/tuanqing/install-program
-    git clone https://github.com/tuanqing/openwrt-mentohust
-    git clone https://github.com/tuanqing/luci-app-mentohust
+#     git clone https://github.com/tuanqing/openwrt-mentohust
+#     git clone https://github.com/tuanqing/luci-app-mentohust
     git clone https://github.com/jerrykuku/luci-theme-argon -b 18.06
     git clone https://github.com/jerrykuku/luci-app-jd-dailybonus
-#     git clone https://github.com/lisaac/luci-lib-docker
-#     git clone https://github.com/lisaac/luci-app-dockerman
+    git clone https://github.com/jerrykuku/luci-app-ttnode
+    git clone https://github.com/jerrykuku/luci-app-argon-config
+    git clone https://github.com/lisaac/luci-lib-docker
+    git clone https://github.com/lisaac/luci-app-dockerman
+
+    rm -rf libs/nettle
+    rm -rf lean/{samba4,luci-app-samba4,luci-app-ttyd,luci-theme-argon,luci-lib-docker}
+    svn co https://github.com/Lienol/openwrt/branches/main/package/libs/{libaudit,libsemanage,musl-fts,nettle} libs
 )
 
 cat >feeds.conf.default <<-EOF
@@ -24,8 +30,17 @@ src-git helloworld https://github.com/fw876/helloworld.git
 src-git passwall_trojango https://github.com/goer99/xiaorouji-openwrt-passwall.git
 EOF
 
-rm -rf package/lean/{samba4,luci-app-samba4,luci-app-ttyd,luci-theme-argon,luci-lib-docker}
-svn co https://github.com/Lienol/openwrt/branches/main/package/libs/{libaudit,musl-fts,libsemanage} package/libs
+#rm -rf package/lean/{samba4,luci-app-samba4,luci-app-ttyd,luci-theme-argon,luci-lib-docker}
+#svn co https://github.com/Lienol/openwrt/branches/main/package/libs/{libaudit,musl-fts,libsemanage} package/libs
+
+./scripts/feeds update -a
+
+rm -rf feeds/packages/utils/{containerd,libnetwork,runc,tini}
+svn co https://github.com/Lienol/openwrt-packages/trunk/utils/docker-ce feeds/packages/utils/docker-ce
+svn co https://github.com/Lienol/openwrt-packages/trunk/utils/containerd feeds/packages/utils/containerd
+svn co https://github.com/Lienol/openwrt-packages/trunk/utils/libnetwork feeds/packages/utils/libnetwork
+svn co https://github.com/Lienol/openwrt-packages/trunk/utils/runc feeds/packages/utils/runc
+svn co https://github.com/Lienol/openwrt-packages/trunk/utils/tini feeds/packages/utils/tini
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
@@ -77,8 +92,8 @@ CONFIG_PACKAGE_luci-app-aria2=y
 CONFIG_PACKAGE_luci-app-cifs-mount=y
 CONFIG_PACKAGE_luci-app-samba4=y
 CONFIG_PACKAGE_luci-app-ttyd=y
-CONFIG_PACKAGE_luci-app-mentohust=y
-# CONFIG_PACKAGE_luci-app-dockerman=y
+#CONFIG_PACKAGE_luci-app-mentohust=y
+#-#CONFIG_PACKAGE_luci-app-dockerman=y
 CONFIG_PACKAGE_luci-app-jd-dailybonus=y
 ## luci theme
 CONFIG_PACKAGE_luci-theme-bootstrap-mod=y
